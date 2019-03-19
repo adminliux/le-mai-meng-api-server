@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="1" status="DEBUG" strict="true" name="LogConfig">
+    <Properties>
+        <Property name="logbasedir">web-log</Property>
+        <Property name="log.layout">%d %-5p %t (%c:%L) - %m%n</Property>
+    </Properties>
+    <!--此处使用了两种类型的appender,RollingFile为滚动类型,满足策略条件后会新建文件夹记录 -->
+    <Appenders>
+        <Appender type="Console" name="STDOUT">
+            <Target>SYSTEM_OUT</Target>
+            <Layout type="PatternLayout" pattern="${log.layout}"/>
+        </Appender>
+        <Appender type="RollingFile" name="FILE" fileName="${logbasedir}/jutap-${sys:APPNAME}.log"
+                  filePattern="${logbasedir}/jutap-${sys:APPNAME}-%d{yyyy-MM-dd}.%i.log">
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <Layout type="PatternLayout">
+                <Charset>UTF-8</Charset>
+                <Pattern>${log.layout}</Pattern>
+            </Layout>
+        </Appender>
+        <Appender type="RollingFile" name="ExceptionLog" fileName="${logbasedir}/exception-${sys:APPNAME}.log"
+                  filePattern="${logbasedir}/exception-${sys:APPNAME}-%d{yyyy-MM-dd}.%i.log">
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <Layout type="PatternLayout">
+                <Charset>UTF-8</Charset>
+                <Pattern>${log.layout}</Pattern>
+            </Layout>
+        </Appender>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="exception" level="error" additivity="false">
+        </Logger>
+
+        <Root level="info">
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="FILE"/>
+        </Root>
+        <Logger name="com.garfield.learn" level="debug"/>
+        <Logger name="com.garfield.learnp" level="info"/>
+        <logger name="com.daolezuche" level="DEBUG"/>
+        <logger name="com.rpframework.module.common.bottom" level="DEBUG"/>
+        <logger name="org.mybatis" level="DEBUG"/>
+    </Loggers>
+</Configuration>
