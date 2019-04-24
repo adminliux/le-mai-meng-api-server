@@ -31,8 +31,7 @@
         </mvc:interceptor>
     </mvc:interceptors>
     <!--权限地址初始化-->
-    <bean id="apiAccessInterfaceInspect"
-          class="com.rpframework.module.common.bottom.listener.AccessInterfaceInspect">
+    <bean id="apiAccessInterfaceInspect" class="com.rpframework.module.common.bottom.listener.AccessInterfaceInspect">
         <constructor-arg index="0">
             <list>
                 <value>com.daolezuche.controller</value>
